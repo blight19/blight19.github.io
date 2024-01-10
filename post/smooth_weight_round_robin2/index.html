@@ -227,174 +227,174 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> smmoth_weight_rb
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;container/ring&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;sync&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;container/ring&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;errors&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;sync&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">var</span> DuplicateNodeError = errors.<span style="color:#50fa7b">New</span>(<span style="color:#f1fa8c">&#34;duplicate node&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> Node <span style="color:#8be9fd;font-style:italic">struct</span> {
-</span></span><span style="display:flex;"><span>	Host          <span style="color:#8be9fd">string</span>
-</span></span><span style="display:flex;"><span>	Weight        <span style="color:#8be9fd">int</span>
-</span></span><span style="display:flex;"><span>	CurrentWeight <span style="color:#8be9fd">int</span>
-</span></span><span style="display:flex;"><span>	Meta          <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span> <span style="color:#6272a4">//other info that you want to store
+</span></span><span style="display:flex;"><span>    Host          <span style="color:#8be9fd">string</span>
+</span></span><span style="display:flex;"><span>    Weight        <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>    CurrentWeight <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>    Meta          <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span> <span style="color:#6272a4">//other info that you want to store
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">NewNode</span>(name <span style="color:#8be9fd">string</span>, weight <span style="color:#8be9fd">int</span>, meta <span style="color:#8be9fd;font-style:italic">map</span>[<span style="color:#8be9fd">string</span>]<span style="color:#8be9fd">string</span>) <span style="color:#ff79c6">*</span>Node {
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>Node{
-</span></span><span style="display:flex;"><span>		Host:   name,
-</span></span><span style="display:flex;"><span>		Weight: weight,
-</span></span><span style="display:flex;"><span>		Meta:   meta,
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>Node{
+</span></span><span style="display:flex;"><span>        Host:   name,
+</span></span><span style="display:flex;"><span>        Weight: weight,
+</span></span><span style="display:flex;"><span>        Meta:   meta,
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">type</span> WeightRoundRobinWithRing <span style="color:#8be9fd;font-style:italic">struct</span> {
-</span></span><span style="display:flex;"><span>	Nodes       []<span style="color:#ff79c6">*</span>Node
-</span></span><span style="display:flex;"><span>	mu          sync.RWMutex <span style="color:#6272a4">//when add node or del node ,lock
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	totalWeight <span style="color:#8be9fd">int</span>
-</span></span><span style="display:flex;"><span>	rr          <span style="color:#ff79c6">*</span>ring.Ring <span style="color:#6272a4">//ring
+</span></span><span style="display:flex;"><span>    Nodes       []<span style="color:#ff79c6">*</span>Node
+</span></span><span style="display:flex;"><span>    mu          sync.RWMutex <span style="color:#6272a4">//when add node or del node ,lock
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    totalWeight <span style="color:#8be9fd">int</span>
+</span></span><span style="display:flex;"><span>    rr          <span style="color:#ff79c6">*</span>ring.Ring <span style="color:#6272a4">//ring
 </span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">NewWeightRoundRobinWithRing</span>() <span style="color:#ff79c6">*</span>WeightRoundRobinWithRing {
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>WeightRoundRobinWithRing{
-</span></span><span style="display:flex;"><span>		Nodes: []<span style="color:#ff79c6">*</span>Node{},
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">&amp;</span>WeightRoundRobinWithRing{
+</span></span><span style="display:flex;"><span>        Nodes: []<span style="color:#ff79c6">*</span>Node{},
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> (r <span style="color:#ff79c6">*</span>WeightRoundRobinWithRing) <span style="color:#50fa7b">AddNode</span>(node <span style="color:#ff79c6">*</span>Node) <span style="color:#8be9fd">error</span> {
-</span></span><span style="display:flex;"><span>	r.mu.<span style="color:#50fa7b">Lock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">defer</span> r.mu.<span style="color:#50fa7b">Unlock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#6272a4">//check
-</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>	<span style="color:#ff79c6">for</span> _, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> r.Nodes {
-</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> n.Host <span style="color:#ff79c6">==</span> node.Host {
-</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">return</span> DuplicateNodeError
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	r.Nodes = <span style="color:#8be9fd;font-style:italic">append</span>(r.Nodes, node)
-</span></span><span style="display:flex;"><span>	r.totalWeight <span style="color:#ff79c6">+=</span> node.Weight
-</span></span><span style="display:flex;"><span>	r.rr = ring.<span style="color:#50fa7b">New</span>(r.totalWeight)
+</span></span><span style="display:flex;"><span>    r.mu.<span style="color:#50fa7b">Lock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">defer</span> r.mu.<span style="color:#50fa7b">Unlock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#6272a4">//check
+</span></span></span><span style="display:flex;"><span><span style="color:#6272a4"></span>    <span style="color:#ff79c6">for</span> _, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> r.Nodes {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> n.Host <span style="color:#ff79c6">==</span> node.Host {
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">return</span> DuplicateNodeError
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    r.Nodes = <span style="color:#8be9fd;font-style:italic">append</span>(r.Nodes, node)
+</span></span><span style="display:flex;"><span>    r.totalWeight <span style="color:#ff79c6">+=</span> node.Weight
+</span></span><span style="display:flex;"><span>    r.rr = ring.<span style="color:#50fa7b">New</span>(r.totalWeight)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; r.totalWeight; i<span style="color:#ff79c6">++</span> {
-</span></span><span style="display:flex;"><span>		n <span style="color:#ff79c6">:=</span> r.<span style="color:#50fa7b">next</span>()
-</span></span><span style="display:flex;"><span>		r.rr.Value = n
-</span></span><span style="display:flex;"><span>		r.rr = r.rr.<span style="color:#50fa7b">Next</span>()
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; r.totalWeight; i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>        n <span style="color:#ff79c6">:=</span> r.<span style="color:#50fa7b">next</span>()
+</span></span><span style="display:flex;"><span>        r.rr.Value = n
+</span></span><span style="display:flex;"><span>        r.rr = r.rr.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> (r <span style="color:#ff79c6">*</span>WeightRoundRobinWithRing) <span style="color:#50fa7b">DelNode</span>(node <span style="color:#ff79c6">*</span>Node) {
-</span></span><span style="display:flex;"><span>	r.mu.<span style="color:#50fa7b">Lock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">defer</span> r.mu.<span style="color:#50fa7b">Unlock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> r.Nodes {
-</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> n <span style="color:#ff79c6">==</span> node {
-</span></span><span style="display:flex;"><span>			r.Nodes = <span style="color:#8be9fd;font-style:italic">append</span>(r.Nodes[:i], r.Nodes[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>:]<span style="color:#ff79c6">...</span>)
-</span></span><span style="display:flex;"><span>			r.totalWeight <span style="color:#ff79c6">-=</span> node.Weight
-</span></span><span style="display:flex;"><span>			<span style="color:#ff79c6">break</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	r.rr = ring.<span style="color:#50fa7b">New</span>(r.totalWeight)
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; r.totalWeight; i<span style="color:#ff79c6">++</span> {
-</span></span><span style="display:flex;"><span>		n <span style="color:#ff79c6">:=</span> r.<span style="color:#50fa7b">next</span>()
-</span></span><span style="display:flex;"><span>		r.rr.Value = n
-</span></span><span style="display:flex;"><span>		r.rr = r.rr.<span style="color:#50fa7b">Next</span>()
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    r.mu.<span style="color:#50fa7b">Lock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">defer</span> r.mu.<span style="color:#50fa7b">Unlock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i, n <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> r.Nodes {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> n <span style="color:#ff79c6">==</span> node {
+</span></span><span style="display:flex;"><span>            r.Nodes = <span style="color:#8be9fd;font-style:italic">append</span>(r.Nodes[:i], r.Nodes[i<span style="color:#ff79c6">+</span><span style="color:#bd93f9">1</span>:]<span style="color:#ff79c6">...</span>)
+</span></span><span style="display:flex;"><span>            r.totalWeight <span style="color:#ff79c6">-=</span> node.Weight
+</span></span><span style="display:flex;"><span>            <span style="color:#ff79c6">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    r.rr = ring.<span style="color:#50fa7b">New</span>(r.totalWeight)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; r.totalWeight; i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>        n <span style="color:#ff79c6">:=</span> r.<span style="color:#50fa7b">next</span>()
+</span></span><span style="display:flex;"><span>        r.rr.Value = n
+</span></span><span style="display:flex;"><span>        r.rr = r.rr.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> (r <span style="color:#ff79c6">*</span>WeightRoundRobinWithRing) <span style="color:#50fa7b">Print</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> _, node <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> r.Nodes {
-</span></span><span style="display:flex;"><span>		fmt.<span style="color:#50fa7b">Print</span>(node.CurrentWeight, <span style="color:#f1fa8c">&#34; &#34;</span>)
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> _, node <span style="color:#ff79c6">:=</span> <span style="color:#ff79c6">range</span> r.Nodes {
+</span></span><span style="display:flex;"><span>        fmt.<span style="color:#50fa7b">Print</span>(node.CurrentWeight, <span style="color:#f1fa8c">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> (r <span style="color:#ff79c6">*</span>WeightRoundRobinWithRing) <span style="color:#50fa7b">next</span>() <span style="color:#ff79c6">*</span>Node {
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	n <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">len</span>(r.Nodes)
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> n <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">if</span> n <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">return</span> r.Nodes[<span style="color:#bd93f9">0</span>]
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	flag <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>
-</span></span><span style="display:flex;"><span>	m <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; n; i<span style="color:#ff79c6">++</span> {
-</span></span><span style="display:flex;"><span>		r.Nodes[i].CurrentWeight <span style="color:#ff79c6">+=</span> r.Nodes[i].Weight
-</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> r.Nodes[i].CurrentWeight &gt; m {
-</span></span><span style="display:flex;"><span>			m = r.Nodes[i].CurrentWeight
-</span></span><span style="display:flex;"><span>			flag = i
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	r.Nodes[flag].CurrentWeight <span style="color:#ff79c6">-=</span> r.totalWeight
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> r.Nodes[flag]
+</span></span><span style="display:flex;"><span>    n <span style="color:#ff79c6">:=</span> <span style="color:#8be9fd;font-style:italic">len</span>(r.Nodes)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> n <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">0</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> <span style="color:#ff79c6">nil</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">if</span> n <span style="color:#ff79c6">==</span> <span style="color:#bd93f9">1</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">return</span> r.Nodes[<span style="color:#bd93f9">0</span>]
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    flag <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>    m <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; n; i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>        r.Nodes[i].CurrentWeight <span style="color:#ff79c6">+=</span> r.Nodes[i].Weight
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> r.Nodes[i].CurrentWeight &gt; m {
+</span></span><span style="display:flex;"><span>            m = r.Nodes[i].CurrentWeight
+</span></span><span style="display:flex;"><span>            flag = i
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    r.Nodes[flag].CurrentWeight <span style="color:#ff79c6">-=</span> r.totalWeight
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> r.Nodes[flag]
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> (r <span style="color:#ff79c6">*</span>WeightRoundRobinWithRing) <span style="color:#50fa7b">Next</span>() <span style="color:#ff79c6">*</span>Node {
-</span></span><span style="display:flex;"><span>	r.mu.<span style="color:#50fa7b">RLock</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">defer</span> r.mu.<span style="color:#50fa7b">RUnlock</span>()
-</span></span><span style="display:flex;"><span>	n <span style="color:#ff79c6">:=</span> r.rr.Value.(<span style="color:#ff79c6">*</span>Node)
-</span></span><span style="display:flex;"><span>	r.rr = r.rr.<span style="color:#50fa7b">Next</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">return</span> n
+</span></span><span style="display:flex;"><span>    r.mu.<span style="color:#50fa7b">RLock</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">defer</span> r.mu.<span style="color:#50fa7b">RUnlock</span>()
+</span></span><span style="display:flex;"><span>    n <span style="color:#ff79c6">:=</span> r.rr.Value.(<span style="color:#ff79c6">*</span>Node)
+</span></span><span style="display:flex;"><span>    r.rr = r.rr.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">return</span> n
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>写一个benchmark测试程序来进行测试</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#282a36;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-golang" data-lang="golang"><span style="display:flex;"><span><span style="color:#ff79c6">package</span> smmoth_weight_rb
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#ff79c6">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#f1fa8c">&#34;testing&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f1fa8c">&#34;testing&#34;</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">TestAddNode</span>(t <span style="color:#ff79c6">*</span>testing.T) {
-</span></span><span style="display:flex;"><span>	s <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>}
-</span></span><span style="display:flex;"><span>	r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewWeightRoundRobinWithRing</span>()
-</span></span><span style="display:flex;"><span>	A <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	B <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	C <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(A)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(B)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(C)
+</span></span><span style="display:flex;"><span>    s <span style="color:#ff79c6">:=</span> []<span style="color:#8be9fd">string</span>{<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#f1fa8c">&#34;A&#34;</span>}
+</span></span><span style="display:flex;"><span>    r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewWeightRoundRobinWithRing</span>()
+</span></span><span style="display:flex;"><span>    A <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    B <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    C <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(A)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(B)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(C)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#bd93f9">10</span>; i<span style="color:#ff79c6">++</span> {
-</span></span><span style="display:flex;"><span>		n <span style="color:#ff79c6">:=</span> r.<span style="color:#50fa7b">Next</span>()
-</span></span><span style="display:flex;"><span>		t.<span style="color:#50fa7b">Logf</span>(<span style="color:#f1fa8c">&#34;[%d]n:%s&#34;</span>, i, n.Host)
-</span></span><span style="display:flex;"><span>		<span style="color:#ff79c6">if</span> n.Host <span style="color:#ff79c6">!=</span> s[i] {
-</span></span><span style="display:flex;"><span>			t.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;[%d]:expected %s, got %s&#34;</span>, i, s[i], n.Host)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; <span style="color:#bd93f9">10</span>; i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>        n <span style="color:#ff79c6">:=</span> r.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>        t.<span style="color:#50fa7b">Logf</span>(<span style="color:#f1fa8c">&#34;[%d]n:%s&#34;</span>, i, n.Host)
+</span></span><span style="display:flex;"><span>        <span style="color:#ff79c6">if</span> n.Host <span style="color:#ff79c6">!=</span> s[i] {
+</span></span><span style="display:flex;"><span>            t.<span style="color:#50fa7b">Errorf</span>(<span style="color:#f1fa8c">&#34;[%d]:expected %s, got %s&#34;</span>, i, s[i], n.Host)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">BenchmarkWeightRoundRobinWithRing_Next</span>(b <span style="color:#ff79c6">*</span>testing.B) {
-</span></span><span style="display:flex;"><span>	r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewWeightRoundRobinWithRing</span>()
-</span></span><span style="display:flex;"><span>	A <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	B <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	C <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#bd93f9">3</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	D <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;D&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	E <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;E&#34;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(A)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(B)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(C)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(D)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(E)
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; b.N; i<span style="color:#ff79c6">++</span> {
-</span></span><span style="display:flex;"><span>		r.<span style="color:#50fa7b">Next</span>()
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewWeightRoundRobinWithRing</span>()
+</span></span><span style="display:flex;"><span>    A <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    B <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    C <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#bd93f9">3</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    D <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;D&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    E <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;E&#34;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(A)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(B)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(C)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(D)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(E)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; b.N; i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>        r.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#8be9fd;font-style:italic">func</span> <span style="color:#50fa7b">BenchmarkWeightRoundRobin_Next2</span>(b <span style="color:#ff79c6">*</span>testing.B) {
-</span></span><span style="display:flex;"><span>	r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewWeightRoundRobin</span>()
-</span></span><span style="display:flex;"><span>	A <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	B <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	C <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#bd93f9">3</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	D <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;D&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	E <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;E&#34;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">nil</span>)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(A)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(B)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(C)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(D)
-</span></span><span style="display:flex;"><span>	r.<span style="color:#50fa7b">AddNode</span>(E)
-</span></span><span style="display:flex;"><span>	<span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; b.N; i<span style="color:#ff79c6">++</span> {
-</span></span><span style="display:flex;"><span>		r.<span style="color:#50fa7b">Next</span>()
-</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    r <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewWeightRoundRobin</span>()
+</span></span><span style="display:flex;"><span>    A <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;A&#34;</span>, <span style="color:#bd93f9">4</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    B <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;B&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    C <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;C&#34;</span>, <span style="color:#bd93f9">3</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    D <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;D&#34;</span>, <span style="color:#bd93f9">2</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    E <span style="color:#ff79c6">:=</span> <span style="color:#50fa7b">NewNode</span>(<span style="color:#f1fa8c">&#34;E&#34;</span>, <span style="color:#bd93f9">1</span>, <span style="color:#ff79c6">nil</span>)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(A)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(B)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(C)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(D)
+</span></span><span style="display:flex;"><span>    r.<span style="color:#50fa7b">AddNode</span>(E)
+</span></span><span style="display:flex;"><span>    <span style="color:#ff79c6">for</span> i <span style="color:#ff79c6">:=</span> <span style="color:#bd93f9">0</span>; i &lt; b.N; i<span style="color:#ff79c6">++</span> {
+</span></span><span style="display:flex;"><span>        r.<span style="color:#50fa7b">Next</span>()
+</span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>经过测试在5个节点的情况下花费19ns 小于27ns ,并且由于算法复杂度为O(1)，所以节点数量越多，这个差距会更明显。</p>
 <pre tabindex="0"><code>goos: linux
@@ -402,7 +402,7 @@ goarch: amd64
 pkg: smmoth-weight-rb
 cpu: AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx  
 BenchmarkWeightRoundRobinWithRing_Next
-BenchmarkWeightRoundRobinWithRing_Next-8   	58691228	        19.59 ns/op
+BenchmarkWeightRoundRobinWithRing_Next-8       58691228            19.59 ns/op
 PASS
 
 
@@ -412,7 +412,7 @@ goarch: amd64
 pkg: smmoth-weight-rb
 cpu: AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx  
 BenchmarkWeightRoundRobin_Next2
-BenchmarkWeightRoundRobin_Next2-8   	37271308	        27.57 ns/op
+BenchmarkWeightRoundRobin_Next2-8       37271308            27.57 ns/op
 PASS
 </code></pre>
 
