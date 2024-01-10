@@ -16,6 +16,13 @@
       <description>负载均衡算法&amp;ndash;平滑加权轮询法 平常比较常用的负载均衡算法有 随机 一致性哈希 轮询 加权轮询 其中，加权轮询算法常用的是平滑加权轮询法，比如</description>
     </item>
     <item>
+      <title>负载均衡算法2</title>
+      <link>/post/smooth_weight_round_robin2/</link>
+      <pubDate>Tue, 09 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/post/smooth_weight_round_robin2/</guid>
+      <description>负载均衡算法&amp;ndash;平滑加权轮询法2 那上篇文章我们了解了平滑加权轮询，同时实现了一个简单的golang版本。 那么，我们仔细想像下还有没</description>
+    </item>
+    <item>
       <title>An Example Post</title>
       <link>/post/my-first-post/</link>
       <pubDate>Mon, 04 Jun 2018 00:00:00 +0000</pubDate>
