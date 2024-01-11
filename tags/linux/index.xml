@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux on 闫的Blog</title>
+    <link>/tags/linux/</link>
+    <description>Recent content in linux on 闫的Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 10 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <atom:link href="/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Linux是怎样工作的读书笔记-第一章</title>
+      <link>/post/how_linux_work1/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/post/how_linux_work1/</guid>
+      <description>每个程序单独调用设备的话，对于编写十分复杂，开发成本高，并且多个进程同时调用一个设备会产生问题。为了解决这个问题，单独编写驱动程序来和设备交</description>
+    </item>
+  </channel>
+</rss>

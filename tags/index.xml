@@ -6,8 +6,29 @@
     <description>Recent content in Tags on 闫的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jan 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>golang</title>
+      <link>/tags/golang/</link>
+      <pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/tags/golang/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>os</title>
+      <link>/tags/os/</link>
+      <pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/tags/os/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>linux</title>
+      <link>/tags/linux/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/tags/linux/</guid>
+      <description></description>
+    </item>
     <item>
       <title>tag2</title>
       <link>/tags/tag2/</link>

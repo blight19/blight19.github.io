@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="Linux是怎样工作的读书笔记-第一章" />
+    <meta property="og:title" content="Linux是怎样工作的读书笔记-第一章" />
+    <meta property="twitter:title" content="Linux是怎样工作的读书笔记-第一章" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="闫树爽, zhaohuabing, Yanshushuang, , 闫树爽的网络日志, 闫树爽的博客, Yanshushuang Blog, 博客, 个人网站, 互联网, Web, Golang , Redis, Python">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Posts | 闫树爽的博客 | Yanshushuang Blog</title>
+    <title>Linux是怎样工作的读书笔记-第一章 | 闫树爽的博客 | Yanshushuang Blog</title>
 
-    <link rel="canonical" href="/post/">
+    <link rel="canonical" href="/post/how_linux_work1/">
 
     
     
@@ -155,14 +155,41 @@
 
 
 
-<header class="intro-header" style="background-image: url('/images/home-bg-jeep.jpg')">
+
+<style type="text/css">
+    header.intro-header {
+        background-image: url('/images/home-bg-jeep.jpg')
+    }
+</style>
+
+<header class="intro-header" >
+
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
-                <div class="site-heading">
-                    <h1>闫的Blog </h1>
-                    
-		    <span class="subheading"></span>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/linux" title="linux">
+                            linux
+                        </a>
+                        
+                    </div>
+                    <h1>Linux是怎样工作的读书笔记-第一章</h1>
+                    <h2 class="subheading"></h2>
+                    <span class="meta">
+                        
+                            Posted by 
+                            
+                                    闫的Blog
+                             
+                            on 
+                            Wednesday, January 10, 2024
+                            
+                            
+                            
+                            
+                    </span>
                 </div>
             </div>
         </div>
@@ -175,19 +202,88 @@
 <article>
     <div class="container">
         <div class="row">
+
             
             <div class="
                 col-lg-8 col-lg-offset-2
                 col-md-10 col-md-offset-1
                 post-container">
 
-         	
+                
+                <p>每个程序单独调用设备的话，对于编写十分复杂，开发成本高，并且多个进程同时调用一个设备会产生问题。为了解决这个问题，单独编写驱动程序来和设备交互。</p>
+<p>为了防止“不通过驱动程序也能访问设备”的问题，CPU设计了两种工作模式：</p>
+<ul>
+<li>
+<p>内核模式</p>
+</li>
+<li>
+<p>用户模式</p>
+</li>
+</ul>
+<p>只有在内核模式才能访问设备，并且驱动程序就在内核模式下运行。普通的程序在用户态运行。并且还有一些只能在内核模式运行的处理程序：</p>
+<ul>
+<li>
+<p>进程管理系统</p>
+</li>
+<li>
+<p>进程调度器</p>
+</li>
+<li>
+<p>内存管理系统</p>
+</li>
+</ul>
+<p>把这些功能整合在一起的程序就是<strong>内核</strong>。如果进程想要使用内核的功能，可以通过<strong>系统调用</strong>来向内核发出请求。</p>
+<p>OS并不单指内核，还有许多在用户态的程序构成。</p>
+<p>内核负责分配计算机的CPU和内存等资源。</p>
+<p>在进程运行的过程中,各种数据会以内存为中心,在 CPU 上的寄存器
+或外部存储器等各种存储器之间进行交换。</p>
+<p>这虽然可以通过设备驱动程序访问外部存储器中的数据 一过程,通常会利用被称为
+文件系统的程序进行访问。</p>
+
+
+                
+
+                
+                <hr>
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/post/smooth_weight_round_robin2/" data-toggle="tooltip" data-placement="top" title="负载均衡算法2">&larr;
+                            Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/post/process2process_communication/" data-toggle="tooltip" data-placement="top" title="进程间通信方式">Next
+                            Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+                
+
                 
 
 
 
-
             </div>
+
+            
+            
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
+            
+
             
             <div class="
                 col-lg-8 col-lg-offset-2
@@ -210,13 +306,13 @@
                         
                         
                         <a href="/tags/tag1" title="tag1">
-                        tag1
+                            tag1
                         </a>
                         
                         
                         
                         <a href="/tags/tag2" title="tag2">
-                        tag2
+                            tag2
                         </a>
                         
                         
@@ -282,7 +378,7 @@
             
            
                    <li>
-                       <a href='/post/index.xml' rel="alternate" type="application/rss+xml" title="闫的Blog" >
+                       <a href='' rel="alternate" type="application/rss+xml" title="闫的Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

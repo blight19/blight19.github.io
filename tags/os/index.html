@@ -15,9 +15,9 @@
     
 
     
-    <meta name="title" content="" />
-    <meta property="og:title" content="" />
-    <meta property="twitter:title" content="" />
+    <meta name="title" content="os" />
+    <meta property="og:title" content="os" />
+    <meta property="twitter:title" content="os" />
     
 
     
@@ -34,9 +34,9 @@
     <meta name="keyword"  content="闫树爽, zhaohuabing, Yanshushuang, , 闫树爽的网络日志, 闫树爽的博客, Yanshushuang Blog, 博客, 个人网站, 互联网, Web, Golang , Redis, Python">
     <link rel="shortcut icon" href="/img/favicon.ico">
 
-    <title>Posts | 闫树爽的博客 | Yanshushuang Blog</title>
+    <title>os | 闫树爽的博客 | Yanshushuang Blog</title>
 
-    <link rel="canonical" href="/post/">
+    <link rel="canonical" href="/tags/os/">
 
     
     
@@ -171,67 +171,161 @@
 
 
 
-
-<article>
-    <div class="container">
-        <div class="row">
+  
+<div data-pagefind-ignore="all" class="container">
+    <div class="row">
+        
+        
+   	    <div class="
+            col-lg-8 col-lg-offset-1
+            col-md-8 col-md-offset-1
+            col-sm-12
+            col-xs-12
+            post-container
+        ">
             
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
+<div data-pagefind-ignore="all">
 
-         	
-                
-
-
-
-
-            </div>
-            
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                
-                
-                <section>
-                    <hr class="hidden-sm hidden-xs">
-                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
-                    <div class="tags">
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        <a href="/tags/tag1" title="tag1">
-                        tag1
-                        </a>
-                        
-                        
-                        
-                        <a href="/tags/tag2" title="tag2">
-                        tag2
-                        </a>
-                        
-                        
-                        
-                        
-                    </div>
-                </section>
-                
-
-                
-                
-            </div>
+<div class="post-preview">
+    <a href="/post/process2process_communication/">
+        <h2 class="post-title">
+            进程间通信方式
+        </h2>
+	
+        <h3 class="post-subtitle">
+            process to process communication
+        </h3>
+	
+        <div class="post-content-preview">
+	
+            使用操作系统中的管道来进行通信 创建管道 syscall.Mkfifo(path, 0666) 读取和写入 func read() { fmt.Println(&#34;open a named pipe file for read.&#34;) file, _ := os.OpenFile(pipeFile, os.O_RDWR, os.ModeNamedPipe) reader := bufio.NewReader(file) for { line, err := reader.ReadBytes(&#39;\n&#39;) fmt.Println(&#34;read...&#34;) if err == nil { fmt.Print(&#34;load string: &#34; + string(line)) } } } func write() { f, err
+       
         </div>
-    </div>
-</article>
+    </a>
+    <p class="post-meta">
+    
+        Posted by 闫的Blog on Thursday, January 11, 2024
+        
+        
+    
+    </p>
+
+</div>
+<hr>
+
+</div>
+
+            
+
+
+
+       	</div>
+        
+
+<div class="
+    col-lg-3 col-lg-offset-0
+    col-md-3 col-md-offset-0
+    col-sm-12
+    col-xs-12
+    sidebar-container
+">
+    
+	
+    <section class="visible-md visible-lg">
+	
+        <div class="short-about">
+            
+            <a href="/about">
+               <img src="/img/yan.png" alt="avatar" style="cursor: pointer" />
+            </a>
+            
+            
+                <p>Software Developer, Open Source Enthusiast and Life Adventurer</p>
+            
+           
+           <ul class="list-inline">
+               
+               <li>
+                   <a href="mailto:youremail@gmail.com">
+                      <span class="fa-stack fa-lg">
+                          <i class="fa fa-circle fa-stack-2x"></i>
+                          <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                      </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+               
+               <li>
+                   <a target="_blank" href="https://github.com/blight19">
+                       <span class="fa-stack fa-lg">
+                           <i class="fas fa-circle fa-stack-2x"></i>
+                           <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                       </span>
+                   </a>
+               </li>
+               
+               
+               
+               
+               
+               
+            
+            
+               
+               
+               
+               
+                </ul>
+            </div>
+    </section>
+	
+    
+    
+    
+    
+    <section>
+        <hr class="hidden-sm hidden-xs">
+        <h5>FEATURED TAGS</h5>
+        <div class="tags">
+            
+            
+               
+            
+               
+            
+               
+            
+               
+                    <a href="/tags/tag1" title="tag1">
+                        tag1
+                    </a>
+               
+            
+               
+                    <a href="/tags/tag2" title="tag2">
+                        tag2
+                    </a>
+               
+            
+               
+            
+        </div>
+    </section>
+    
+
+    
+    
+    
+</div>
+
+	</div>
+</div>
+
 
 
 
@@ -282,7 +376,7 @@
             
            
                    <li>
-                       <a href='/post/index.xml' rel="alternate" type="application/rss+xml" title="闫的Blog" >
+                       <a href='/tags/os/index.xml' rel="alternate" type="application/rss+xml" title="闫的Blog" >
                            <span class="fa-stack fa-lg">
                                <i class="fas fa-circle fa-stack-2x"></i>
                                <i class="fas fa-rss fa-stack-1x fa-inverse"></i>

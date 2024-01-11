@@ -6,8 +6,22 @@
     <description>Recent content on 闫的Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 10 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 11 Jan 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>进程间通信方式</title>
+      <link>/post/process2process_communication/</link>
+      <pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/post/process2process_communication/</guid>
+      <description>使用操作系统中的管道来进行通信 创建管道 syscall.Mkfifo(path, 0666) 读取和写入 func read() { fmt.Println(&amp;#34;open a named pipe file for read.&amp;#34;) file, _ := os.OpenFile(pipeFile, os.O_RDWR, os.ModeNamedPipe) reader := bufio.NewReader(file) for { line, err := reader.ReadBytes(&amp;#39;\n&amp;#39;) fmt.Println(&amp;#34;read...&amp;#34;) if err == nil { fmt.Print(&amp;#34;load string: &amp;#34; + string(line)) } } } func write() { f, err</description>
+    </item>
+    <item>
+      <title>Linux是怎样工作的读书笔记-第一章</title>
+      <link>/post/how_linux_work1/</link>
+      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
+      <guid>/post/how_linux_work1/</guid>
+      <description>每个程序单独调用设备的话，对于编写十分复杂，开发成本高，并且多个进程同时调用一个设备会产生问题。为了解决这个问题，单独编写驱动程序来和设备交</description>
+    </item>
     <item>
       <title>负载均衡算法2</title>
       <link>/post/smooth_weight_round_robin2/</link>
@@ -41,7 +55,7 @@
       <link>/notes/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>/notes/</guid>
-      <description>Go 语言学习笔记 Envoy 学习笔记</description>
+      <description></description>
     </item>
     <item>
       <title></title>
