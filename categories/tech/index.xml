@@ -13,7 +13,7 @@
       <link>/post/process2process_communication/</link>
       <pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate>
       <guid>/post/process2process_communication/</guid>
-      <description>使用操作系统中的管道来进行通信 创建管道 syscall.Mkfifo(path, 0666) 读取和写入 func read() { fmt.Println(&amp;#34;open a named pipe file for read.&amp;#34;) file, _ := os.OpenFile(pipeFile, os.O_RDWR, os.ModeNamedPipe) reader := bufio.NewReader(file) for { line, err := reader.ReadBytes(&amp;#39;\n&amp;#39;) fmt.Println(&amp;#34;read...&amp;#34;) if err == nil { fmt.Print(&amp;#34;load string: &amp;#34; + string(line)) } } } func write() { f, err</description>
+      <description>## 使用操作系统中的管道来进行通信 创建管道 syscall.Mkfifo(path, 0666) 读取和写入 func read() { fmt.Println(&amp;#34;open a named pipe file for read.&amp;#34;) file, _ := os.OpenFile(pipeFile, os.O_RDWR, os.ModeNamedPipe) reader := bufio.NewReader(file) for { line, err := reader.ReadBytes(&amp;#39;\n&amp;#39;) fmt.Println(&amp;#34;read...&amp;#34;) if err == nil { fmt.Print(&amp;#34;load string: &amp;#34; + string(line)) } } } func write() { f,</description>
     </item>
     <item>
       <title>Linux是怎样工作的读书笔记-第一章</title>

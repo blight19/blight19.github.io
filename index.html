@@ -199,7 +199,7 @@
 	
         <div class="post-content-preview">
 	
-            使用操作系统中的管道来进行通信 创建管道 syscall.Mkfifo(path, 0666) 读取和写入 func read() { fmt.Println(&#34;open a named pipe file for read.&#34;) file, _ := os.OpenFile(pipeFile, os.O_RDWR, os.ModeNamedPipe) reader := bufio.NewReader(file) for { line, err := reader.ReadBytes(&#39;\n&#39;) fmt.Println(&#34;read...&#34;) if err == nil { fmt.Print(&#34;load string: &#34; + string(line)) } } } func write() { f, err
+            ## 使用操作系统中的管道来进行通信 创建管道 syscall.Mkfifo(path, 0666) 读取和写入 func read() { fmt.Println(&#34;open a named pipe file for read.&#34;) file, _ := os.OpenFile(pipeFile, os.O_RDWR, os.ModeNamedPipe) reader := bufio.NewReader(file) for { line, err := reader.ReadBytes(&#39;\n&#39;) fmt.Println(&#34;read...&#34;) if err == nil { fmt.Print(&#34;load string: &#34; + string(line)) } } } func write() { f,
        
         </div>
     </a>
