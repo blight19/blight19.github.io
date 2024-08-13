@@ -6,8 +6,15 @@
     <description>Recent content in Tech on 闫的Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/categories/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>负载均衡算法3</title>
+      <link>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</link>
+      <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</guid>
+      <description>负载均衡算法&amp;ndash;平滑加权轮询法2 那上篇文章我们了解了平滑加权轮询，同时实现了一个简单的golang版本。 那么，我们仔细想像下还有没</description>
+    </item>
     <item>
       <title>Linux是怎样工作的读书笔记-第三章</title>
       <link>/post/linux_in_practice3/</link>
@@ -35,13 +42,6 @@
       <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
       <guid>/post/linux_in_practice1/</guid>
       <description>每个程序单独调用设备的话，对于编写十分复杂，开发成本高，并且多个进程同时调用一个设备会产生问题。为了解决这个问题，单独编写驱动程序来和设备交</description>
-    </item>
-    <item>
-      <title>负载均衡算法2</title>
-      <link>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</link>
-      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</guid>
-      <description>负载均衡算法&amp;ndash;平滑加权轮询法2 那上篇文章我们了解了平滑加权轮询，同时实现了一个简单的golang版本。 那么，我们仔细想像下还有没</description>
     </item>
     <item>
       <title>负载均衡算法2</title>

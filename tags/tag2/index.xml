@@ -6,8 +6,15 @@
     <description>Recent content in Tag2 on 闫的Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 12 Jan 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 12 Aug 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="/tags/tag2/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>负载均衡算法3</title>
+      <link>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</link>
+      <pubDate>Mon, 12 Aug 2024 00:00:00 +0000</pubDate>
+      <guid>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</guid>
+      <description>负载均衡算法&amp;ndash;平滑加权轮询法2 那上篇文章我们了解了平滑加权轮询，同时实现了一个简单的golang版本。 那么，我们仔细想像下还有没</description>
+    </item>
     <item>
       <title>Linux是怎样工作的读书笔记-第三章</title>
       <link>/post/linux_in_practice3/</link>
@@ -21,13 +28,6 @@
       <pubDate>Thu, 11 Jan 2024 00:00:00 +0000</pubDate>
       <guid>/post/linux_in_practice2/</guid>
       <description>OS并非仅由内核构成，还有许多用户模式下运行的程序。有些以库的形式存在，有些作为单独进程运行。 系统调用 进程控制(创建和删除) 内存管理(分配和</description>
-    </item>
-    <item>
-      <title>负载均衡算法2</title>
-      <link>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</link>
-      <pubDate>Wed, 10 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>/post/smooth_weight_round_robin2---%E5%89%AF%E6%9C%AC/</guid>
-      <description>负载均衡算法&amp;ndash;平滑加权轮询法2 那上篇文章我们了解了平滑加权轮询，同时实现了一个简单的golang版本。 那么，我们仔细想像下还有没</description>
     </item>
     <item>
       <title>负载均衡算法2</title>
